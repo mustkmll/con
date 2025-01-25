@@ -115,17 +115,23 @@ $(".blur").mouseleave(function () {
 });
 // undangan end
 
-// fullscreen logic start
 const goFullscreen = () => {
-  if (document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen();
-  } else if (document.documentElement.webkitRequestFullscreen) {
-    document.documentElement.webkitRequestFullscreen(); // Safari
-  } else if (document.documentElement.msRequestFullscreen) {
-    document.documentElement.msRequestFullscreen(); // IE/Edge
+  const element = document.documentElement;
+
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    // Untuk Safari (iOS dan macOS)
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    // Untuk IE/Edge
+    element.msRequestFullscreen();
+  } else {
+    alert("Mode fullscreen tidak didukung di perangkat ini.");
   }
 };
 
+// Fungsi akan dipanggil saat tombol diklik
 const bukaUndanganBtn = document.querySelector(
   '.btn[data-bs-dismiss="modal"]'
 );
@@ -134,4 +140,3 @@ bukaUndanganBtn.addEventListener("click", () => {
   playAudio(); // Memainkan audio
   goFullscreen(); // Masuk ke mode fullscreen
 });
-// fullscreen logic end
