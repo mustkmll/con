@@ -6,7 +6,7 @@ $(document).ready(function () {
     margin: 15,
     autoplay: true,
     autoplayhoverpause: true,
-    autoplaytimeout: 500,
+    autoplaytimeout: 3000,
     responsive: {
       0: {
         items: 1,
@@ -30,8 +30,22 @@ const rek1 = document.getElementById("rek1");
 const salin1 = document.getElementById("salin1");
 
 salin1.onclick = () => {
-  rek1.select(); // Selects the text inside the input
-  document.execCommand("copy"); // Simply copies the selected text to clipboard
+  rek1.select();
+  document.execCommand("copy");
+  Swal.fire({
+    icon: "success",
+    title: "No. Rekening Berhasil di Salin",
+    showConfirmButton: false,
+    timer: 1000,
+  });
+};
+
+const rek2 = document.getElementById("rek2");
+const salin2 = document.getElementById("salin2");
+
+salin2.onclick = () => {
+  rek2.select();
+  document.execCommand("copy");
   Swal.fire({
     icon: "success",
     title: "No. Rekening Berhasil di Salin",
@@ -77,7 +91,7 @@ function stopAudio() {
 }
 // lagu end
 
-// undngan start
+// undangan start
 function GetURLParameter(sParam) {
   var sPageURL = window.location.search.substring(1);
   var sURLVariables = sPageURL.split("&");
@@ -92,12 +106,32 @@ var to = GetURLParameter("to");
 document.getElementById("nama").innerHTML = to ? decodeURI(to) : "-";
 
 // hover blur effect
-$('.blur').mouseenter(function(){
-  $('.blur').css('filter','blur(5px)'); // Blurs each .blur div
-  $(this).css('filter','blur(0px)');    // Removes blur from the currently hovered .blur div
-})
-$('.blur').mouseleave(function(){
-  $('.blur').css('filter','blur(0px)'); // Removes blur from all when none are hovered
-})
+$(".blur").mouseenter(function () {
+  $(".blur").css("filter", "blur(5px)");
+  $(this).css("filter", "blur(0px)");
+});
+$(".blur").mouseleave(function () {
+  $(".blur").css("filter", "blur(0px)");
+});
+// undangan end
 
-// undngan end
+// fullscreen logic start
+const goFullscreen = () => {
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  } else if (document.documentElement.webkitRequestFullscreen) {
+    document.documentElement.webkitRequestFullscreen(); // Safari
+  } else if (document.documentElement.msRequestFullscreen) {
+    document.documentElement.msRequestFullscreen(); // IE/Edge
+  }
+};
+
+const bukaUndanganBtn = document.querySelector(
+  '.btn[data-bs-dismiss="modal"]'
+);
+
+bukaUndanganBtn.addEventListener("click", () => {
+  playAudio(); // Memainkan audio
+  goFullscreen(); // Masuk ke mode fullscreen
+});
+// fullscreen logic end
